@@ -26,7 +26,7 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Deployment trigger to TUM Apodini server
-        run: echo "Sending request to server"
+        run: echo "Sending request to server in TUM"
         # run: curl --request POST \
         #           --url '131.159.38.52:10010/update' \
         #           --data "update"
