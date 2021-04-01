@@ -2,7 +2,7 @@
 
 name: Deploy
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the v1 branch
   push:
@@ -26,7 +26,15 @@ jobs:
         with:
           # Command to execute on the remote server.
           command: |
-            dts version
+            declare -a fleet=(autobot06 autobot10)
+            cd template-ros-core
+            git checkout demo_24_feb
+            git pull
+            for bot in \${fleet[@]}; do
+              echo \$bot
+              dts devel build -f -H \$bot.local
+              dts duckiebot demo --demo_name indefinite_navigation --duckiebot_name \$bot --package_name duckietown_demos --image duckietown/template-ros-core:demo_24_feb-arm32v7
+            done
           # Hostname or IP address of the server.
           host: 5.19.248.97
           # Username for authentication.
@@ -35,11 +43,3 @@ jobs:
           port: 2222
           # String that contains a private key for either key-based or hostbased user authentication (OpenSSH format)
           key: ${{ secrets.SSH_KEY }}
-      #- name: Deployment trigger to Autolab server
-      #  uses: appleboy/ssh-action@master
-      #  with:
-      #    host: 5.19.248.97
-      #    port: 2222
-      #    username: jass
-      #    key: ${{ secrets.SSH_KEY }}
-      #    script: dts version
