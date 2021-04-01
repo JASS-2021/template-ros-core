@@ -31,10 +31,4 @@ jobs:
           port: 2222
           username: jass
           key: ${{ secrets.SSH_KEY }}
-          script: << EOF 
-              # Assuming autolab has git installed and template-ros-core repo is cloned
-              cd template-ros-core
-              git checkout deployment
-              git pull
-              bash -c ./sshBuildDeploy.sh
-            EOF
+          script: ./sshBuildDeploy.sh
