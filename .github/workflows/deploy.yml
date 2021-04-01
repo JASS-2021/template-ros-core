@@ -24,7 +24,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: ls -a via ssh
+      - name: Connecting to Autolab server via SSH
         uses: garygrossgarten/github-action-ssh@release
         with:
           command: ls -a
@@ -32,6 +32,14 @@ jobs:
           port: 2222
           username: jass
           privateKey: ${{ secrets.SSH_KEY }}
+
+      - name: Pull and deploy latest duckie code
+        run: |
+          template-ros-core
+          git checkout deployment
+          git pull
+          # bash -c "./buildAndDeploy.sh autobot08 circle_drive circle_drive duckietown/template-ros-core:deployment-arm32v7"
+          ls -l
 
       # - name: Add CI SSH Key
       #   run: ssh-add - <<< "${{ secrets.SSH_KEY }}"
