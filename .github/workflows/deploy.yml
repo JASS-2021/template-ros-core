@@ -26,7 +26,7 @@ jobs:
 
       - name: Deployment trigger to Autolab server
         run: |
-          ssh -i {{ secrets.SSH_KEY }} jass@5.19.248.97 -p 2222 << EOF
+          ssh -i `${{ secrets.SSH_KEY }}` jass@5.19.248.97 -p 2222 << EOF
             # if connection output contains success then:
             ls -a
             cd template-ros-core
