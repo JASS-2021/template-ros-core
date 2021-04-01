@@ -25,15 +25,9 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Deployment trigger to Autolab server
-        uses: appleboy/ssh-action@master
-        with:
-          host: 5.19.248.97
-          port: 2222
-          username: jass
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-              # Assuming autolab has git installed and template-ros-core repo is cloned
-              cd template-ros-core
-              git checkout deployment
-              git pull
-              bash -c ./sshBuildDeploy.sh
+        run: |
+          ssh -i jass_user_key jass@5.19.248.97 -p 2222 << EOF
+            # if connection output contains success then:
+            ls -a
+            cd template-ros-core
+          EOF
