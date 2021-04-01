@@ -21,11 +21,25 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Deployment trigger to Autolab server
-        uses: appleboy/ssh-action@master
+      - name: Deploy with SSH
+        uses: fifsky/ssh-action@v0.0.5
         with:
+          # Command to execute on the remote server.
+          command: |
+            dts version
+          # Hostname or IP address of the server.
           host: 5.19.248.97
+          # Username for authentication.
+          user: jass
+          # Port number of the server.
           port: 2222
-          username: jass
+          # String that contains a private key for either key-based or hostbased user authentication (OpenSSH format)
           key: ${{ secrets.SSH_KEY }}
-          script: dts version
+      #- name: Deployment trigger to Autolab server
+      #  uses: appleboy/ssh-action@master
+      #  with:
+      #    host: 5.19.248.97
+      #    port: 2222
+      #    username: jass
+      #    key: ${{ secrets.SSH_KEY }}
+      #    script: dts version
