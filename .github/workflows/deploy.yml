@@ -36,4 +36,4 @@ jobs:
               cd template-ros-core
               git checkout deployment
               git pull
-              bash -c "./sshBuildDeploy.sh
+              bash -c ./sshBuildDeploy.sh
