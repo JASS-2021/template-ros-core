@@ -24,8 +24,8 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Add CI SSH Key
-        run: ssh-add - <<< "${{ secrets.SSH_KEY }}"
+      # - name: Add CI SSH Key
+      #   run: ssh-add - <<< "${{ secrets.SSH_KEY }}"
 
       # Runs a set of commands using the runners shell
       - name: Deployment trigger to Autolab server
