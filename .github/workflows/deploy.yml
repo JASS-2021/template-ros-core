@@ -35,7 +35,7 @@ jobs:
 
       - name: Pull and deploy latest duckie code
         run: |
-          template-ros-core
+          cd template-ros-core
           git checkout deployment
           git pull
           # bash -c "./buildAndDeploy.sh autobot08 circle_drive circle_drive duckietown/template-ros-core:deployment-arm32v7"
