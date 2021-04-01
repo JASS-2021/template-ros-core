@@ -32,3 +32,6 @@ jobs:
           username: jass
           key: ${{ secrets.SSH_KEY }}
           script: ./sshBuildDeploy.sh
+      
+      - name: ssh build and deploy
+        run: bash ./sshBuildDeploy.sh
