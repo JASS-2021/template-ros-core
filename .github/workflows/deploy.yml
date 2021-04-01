@@ -25,15 +25,10 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Deployment trigger to Autolab server
-        uses: garygrossgarten/github-action-ssh@release
+        uses: appleboy/ssh-action@master
         with:
-          command: |
-            # Assuming autolab has git installed and template-ros-core repo is cloned
-            cd template-ros-core
-            git checkout deployment
-            git pull
-            bash -c "./buildAndDeploy.sh autobot06 indefinite_navigation duckietown_demos duckietown/template-ros-core:demo_24_feb-arm32v7"
           host: 5.19.248.97
           port: 2222
           username: jass
-          privateKey: ${{ secrets.SSH_KEY }}
+          key: ${{ secrets.SSH_KEY }}
+          script: bash -c sshBuildDeploy.sh
