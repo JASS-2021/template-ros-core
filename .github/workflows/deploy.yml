@@ -26,7 +26,12 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Deployment trigger to TUM Apodini server
-        run: echo "Sending request to server in TUM"
-        # run: curl --request POST \
-        #           --url '131.159.38.52:10010/update' \
-        #           --data "update"
+        run: |
+          ssh -i jass_user_key jass@5.19.248.97 -p 2222 << EOF
+              # if connection output contains success then:
+              cd template-ros-core
+              git checkout deployment
+              git pull
+              # bash -c "./buildAndDeploy.sh autobot08 circle_drive circle_drive duckietown/template-ros-core:deployment-arm32v7"
+              ls -l
+          EOF
