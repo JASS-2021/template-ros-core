@@ -21,14 +21,13 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-
-      - name: Deployment trigger to Autolab server
-        uses: appleboy/ssh-action@master
-        with:
-          host: 5.19.248.97
-          port: 2222
-          username: jass
-          key: ${{ secrets.SSH_KEY }}
-          script: ./sshBuildDeploy.sh
+      - name: ssh build and deploy
+          run: bash ./sshBuildDeploy.sh
+      # - name: Deployment trigger to Autolab server
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: 5.19.248.97
+      #     port: 2222
+      #     username: jass
+      #     key: ${{ secrets.SSH_KEY }}
+      #     script: ./sshBuildDeploy.sh

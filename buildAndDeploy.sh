@@ -11,3 +11,4 @@ dts duckiebot demo --demo_name $demo_name --duckiebot_name $duckie_bot --package
 
 # Example script to run build and deploy in detached screen terminal 
 # bash -c "./buildAndDeploy.sh autobot06 indefinite_navigation duckietown_demos duckietown/template-ros-core:demo_24_feb-arm32v7"
+# ./sshBuildDeploy.sh autobot06 indefinite_navigation duckietown_demos duckietown/template-ros-core:demo_24_feb-arm32v7
