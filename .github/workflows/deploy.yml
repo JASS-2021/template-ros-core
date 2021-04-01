@@ -28,38 +28,12 @@ jobs:
         uses: garygrossgarten/github-action-ssh@release
         with:
           command: |
-            ls -l
+            # Assuming autolab has git installed and template-ros-core repo is cloned
             cd template-ros-core
             git checkout deployment
             git pull
-            # bash -c "./buildAndDeploy.sh autobot08 circle_drive circle_drive duckietown/template-ros-core:deployment-arm32v7"
-            ls -l
+            bash -c "./buildAndDeploy.sh autobot01 circle_drive circle_drive duckietown/template-ros-core:deployment-arm32v7"
           host: 5.19.248.97
           port: 2222
           username: jass
           privateKey: ${{ secrets.SSH_KEY }}
-
-      # - name: Pull and deploy latest duckie code
-      #   run: |
-      #     ls -l
-      #     cd template-ros-core
-      #     git checkout deployment
-      #     git pull
-      #     # bash -c "./buildAndDeploy.sh autobot08 circle_drive circle_drive duckietown/template-ros-core:deployment-arm32v7"
-      #     ls -l
-
-      # - name: Add CI SSH Key
-      #   run: ssh-add - <<< "${{ secrets.SSH_KEY }}"
-
-      # Runs a set of commands using the runners shell
-      # - name: Deployment trigger to Autolab server
-      #   run: |
-      #     ssh -i ${{ secrets.SSH_KEY }} jass@5.19.248.97 -p 2222 
-      # << EOF
-      #     # if connection output contains success then:
-      #     cd template-ros-core
-      #     git checkout deployment
-      #     git pull
-      #     # bash -c "./buildAndDeploy.sh autobot08 circle_drive circle_drive duckietown/template-ros-core:deployment-arm32v7"
-      #     ls -l
-      # EOF
