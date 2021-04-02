@@ -26,14 +26,16 @@ jobs:
         with:
           # Command to execute on the remote server.
           command: |
-            declare -a fleet=(autobot06 autobot10)
+            mapfile -t fleet < <(avahi-browse -at | grep 'DT::ONLINE::autobot[^ ]*' | grep -o -P '(?<=ONLINE::).*(?=_duckietown)' | xargs)
             cd template-ros-core
             git checkout demo_24_feb
             git pull
             for bot in ${fleet[@]}; do
-              echo $bot
-              dts devel build -f -H $bot.local
-              dts duckiebot demo --demo_name indefinite_navigation --duckiebot_name $bot --package_name duckietown_demos --image duckietown/template-ros-core:demo_24_feb-arm32v7
+              if [ $bot == autobot06 ] || [ $bot == autobot08 ]; then
+                echo $bot
+                dts devel build -f -H $bot.local
+                dts duckiebot demo --demo_name circle_drive --duckiebot_name \$bot --package_name circle_drive --image duckietown/template-ros-core:deployment-arm32v7 --debug
+              fi
             done
           # Hostname or IP address of the server.
           host: 5.19.248.97
