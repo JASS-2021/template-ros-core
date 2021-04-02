@@ -34,7 +34,7 @@ jobs:
               if [ $bot == autobot06 ] || [ $bot == autobot08 ]; then
                 echo $bot
                 dts devel build -f -H $bot.local
-                dts duckiebot demo --demo_name circle_drive --duckiebot_name \$bot --package_name circle_drive --image duckietown/template-ros-core:demo_24_feb-arm32v7
+                dts duckiebot demo --demo_name circle_drive --duckiebot_name $bot --package_name circle_drive --image duckietown/template-ros-core:demo_24_feb-arm32v7
               fi
             done
           # Hostname or IP address of the server.
