@@ -14,8 +14,10 @@ ssh -i ssh_key jass@5.19.248.97 -p 2222 << EOF
     ls
     git pull
     for bot in \${fleet[@]}; do
-        echo \$bot
-        dts devel build -f -H \$bot.local
-        dts duckiebot demo --demo_name circle_drive --duckiebot_name \$bot --package_name circle_drive --image duckietown/template-ros-core:deployment-arm32v7 --debug
+        if [ \$bot == autobot06 ] || [ \$bot == autobot08 ]; then
+            echo \$bot
+            dts devel build -f -H \$bot.local
+            dts duckiebot demo --demo_name circle_drive --duckiebot_name \$bot --package_name circle_drive --image duckietown/template-ros-core:deployment-arm32v7
+        fi
     done
 EOF
