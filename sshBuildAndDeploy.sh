@@ -9,7 +9,7 @@
 
     
 ssh -i ssh_key jass@5.19.248.97 -p 2222 << EOF
-    declare -a fleet=(autobot06 autobot10)
+    mapfile -t fleet < <(avahi-browse -at | grep 'DT::ONLINE::autobot[^ ]*' | grep -o -P '(?<=ONLINE::).*(?=_duckietown)' | xargs)
     cd template-ros-core
     ls
     git pull
