@@ -31,7 +31,7 @@ jobs:
             git checkout demo_24_feb
             git pull
             for bot in ${fleet[@]}; do
-              if [ $bot == autobot06 ] || [ $bot == autobot08 ]; then
+              if false && ([ $bot == autobot06 ] || [ $bot == autobot08 ]); then
                 echo $bot
                 dts devel build -f -H $bot.local
                 dts duckiebot demo --demo_name indefinite_navigation --duckiebot_name $bot --package_name duckietown_demos --image duckietown/template-ros-core:demo_24_feb-arm32v7 
@@ -45,3 +45,34 @@ jobs:
           port: 2222
           # String that contains a private key for either key-based or hostbased user authentication (OpenSSH format)
           key: ${{ secrets.SSH_KEY }}
+
+  deploy-tum:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Deploy with SSH
+        uses: fifsky/ssh-action@v0.0.5
+        with:
+          # Command to execute on the remote server.
+          command: |
+            mapfile -t fleet < <(avahi-browse -at | grep 'DT::ONLINE::[^ ]*' | grep -o -P '(?<=ONLINE::).*(?=_duckietown)' | xargs)
+            cd duckie-town/template-ros-core
+            git checkout demo_24_feb
+            git pull
+            for bot in ${fleet[@]}; do
+              if [ $bot == donald ] || [ $bot == scrooge ]; then
+                echo $bot
+                dts devel build -f -H $bot.local
+                dts duckiebot demo --demo_name indefinite_navigation --duckiebot_name $bot --package_name duckietown_demos --image duckietown/template-ros-core:demo_24_feb-arm32v7 
+              fi
+            done
+          # Hostname or IP address of the server.
+          host: 131.159.38.52
+          # Username for authentication.
+          user: ubuntu
+          # Port number of the server.
+          port: 10010
+          # String that contains a private key for either key-based or hostbased user authentication (OpenSSH format)
+          pass: ${{ secrets.TUM_PASS }}

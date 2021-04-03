@@ -11,13 +11,13 @@
 ssh -i ssh_key jass@5.19.248.97 -p 2222 << EOF
     mapfile -t fleet < <(avahi-browse -at | grep 'DT::ONLINE::autobot[^ ]*' | grep -o -P '(?<=ONLINE::).*(?=_duckietown)' | xargs)
     cd template-ros-core
-    ls
+    git checkout demo_24_feb
     git pull
-    for bot in \${fleet[@]}; do
-        if [ \$bot == autobot06 ] || [ \$bot == autobot08 ]; then
-            echo \$bot
-            dts devel build -f -H \$bot.local
-            dts duckiebot demo --demo_name circle_drive --duckiebot_name \$bot --package_name circle_drive --image duckietown/template-ros-core:deployment-arm32v7
+    for bot in ${fleet[@]}; do
+        if false && ([ $bot == autobot06 ] || [ $bot == autobot08 ]); then
+            echo $bot
+            dts devel build -f -H $bot.local
+            dts duckiebot demo --demo_name indefinite_navigation --duckiebot_name $bot --package_name duckietown_demos --image duckietown/template-ros-core:demo_24_feb-arm32v7 
         fi
     done
 EOF
