@@ -9,7 +9,7 @@
 
     
 ssh -i ssh_key jass@5.19.248.97 -p 2222 << EOF
-    mapfile -t fleet < <(avahi-browse -at | grep 'DT::ONLINE::autobot[^ ]*' | grep -o -P '(?<=ONLINE::).*(?=_duckietown)' | xargs)
+    mapfile -t fleet < <(avahi-browse -at | grep 'IPv4 DT::PRESENCE::autobot[^ ]*' | grep -o -P '(?<=PRESENCE::).*(?=_duckietown)' | xargs)
     cd template-ros-core
     git checkout demo_24_feb
     git pull

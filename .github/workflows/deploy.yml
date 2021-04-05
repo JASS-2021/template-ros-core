@@ -26,7 +26,7 @@ jobs:
         with:
           # Command to execute on the remote server.
           command: |
-            mapfile -t fleet < <(avahi-browse -at | grep 'DT::ONLINE::autobot[^ ]*' | grep -o -P '(?<=ONLINE::).*(?=_duckietown)' | xargs)
+            mapfile -t fleet < <(avahi-browse -at | grep 'IPv4 DT::PRESENCE::autobot[^ ]*' | grep -o -P '(?<=PRESENCE::).*(?=_duckietown)' | xargs)
             cd template-ros-core
             git checkout demo_24_feb
             git pull
@@ -37,7 +37,7 @@ jobs:
                 dts duckiebot demo --demo_name indefinite_navigation --duckiebot_name $bot --package_name duckietown_demos --image duckietown/template-ros-core:demo_24_feb-arm32v7 
               fi
             done
-          # Hostname or IP address of the server.
+          # Hostname or IP address of the server
           host: 5.19.248.97
           # Username for authentication.
           user: jass
