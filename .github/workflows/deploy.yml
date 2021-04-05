@@ -39,7 +39,7 @@ jobs:
             done
           # Hostname or IP address of the server
           host: 5.19.248.97
-          # Username for authentication.
+          # Username for authentication
           user: jass
           # Port number of the server.
           port: 2222
