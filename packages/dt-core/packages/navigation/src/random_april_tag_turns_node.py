@@ -101,7 +101,20 @@ class RandomAprilTagTurnsNode:
         rospy.loginfo(f"[{self.node_name}] Shutting down.")
 
     def get_chosen_turn(self): # stub
-        return 0
+        r = requests.get(f"http://autolab-control-center.local:8080/v1/duckiebot/{os.uname()[1]}/position").json()
+        turn_side = str(r["data"]["atDirection"])
+        d = {
+            "north": 1,
+            "south": 1,
+            "east": 0,
+            "west": 2
+        }
+        turn_id = 1
+        try:
+            turn_id = d[turn_side]
+        except:
+            pass
+        return turn_id
 
     def get_intersection_id(self):
         try:
