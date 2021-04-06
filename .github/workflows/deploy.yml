@@ -31,11 +31,9 @@ jobs:
             git checkout deployment
             git pull
             for bot in ${fleet[@]}; do
-              if false && ([ $bot == autobot06 ] || [ $bot == autobotpi4 ]); then
-                echo $bot
-                dts devel build -f -H $bot.local
-                dts duckiebot demo --demo_name indefinite_navigation --duckiebot_name $bot --package_name duckietown_demos --image duckietown/template-ros-core:deployment-arm32v7
-              fi
+              echo $bot
+              dts devel build -f -H $bot.local
+              dts duckiebot demo --demo_name indefinite_navigation --duckiebot_name $bot --package_name duckietown_demos --image duckietown/template-ros-core:deployment-arm32v7
             done
           # Hostname or IP address of the server
           host: 5.19.248.97
@@ -57,12 +55,12 @@ jobs:
         with:
           # Command to execute on the remote server.
           command: |
-            mapfile -t fleet < <(avahi-browse -at | grep 'DT::ONLINE::[^ ]*' | grep -o -P '(?<=ONLINE::).*(?=_duckietown)' | xargs)
+            mapfile -t fleet < <(avahi-browse -at | grep 'IPv4 DT::PRESENCE::[^ ]*' | grep -o -P '(?<=PRESENCE::).*(?=_duckietown)' | xargs)
             cd duckie-town/template-ros-core
             git checkout deployment
             git pull
             for bot in ${fleet[@]}; do
-              if false && ([ $bot == donald ] || [ $bot == scrooge ]); then
+              if [ $bot == donald ] || [ $bot == scrooge ]; then
                 echo $bot
                 dts devel build -f -H $bot.local
                 dts duckiebot demo --demo_name indefinite_navigation --duckiebot_name $bot --package_name duckietown_demos --image duckietown/template-ros-core:deployment-arm32v7 
