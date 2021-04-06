@@ -8,6 +8,10 @@ import rospy
 from duckietown_msgs.msg import AprilTagsWithInfos, FSMState, TurnIDandType
 from std_msgs.msg import Int16, String  # Imports msg
 
+#import urllib
+import requests
+import json
+import os
 
 class RandomAprilTagTurnsNode:
     def __init__(self):
@@ -100,7 +104,16 @@ class RandomAprilTagTurnsNode:
         return 0
 
     def get_intersection_id(self):
-        return String(str(random.randint(1, 10)))
+        try:
+            r = requests.get(f"http://autolab-control-center.local:8080/v1/duckiebot/{os.uname()[1]}/position").json()
+            #r = json.loads(r)
+            intersection_id = str(r["data"]["intersectionId"])
+            rospy.loginfo(f"[{self.node_name}] direction - {intersection_id}.")
+        except Exception as e:
+            rospy.loginfo(f"[{self.node_name}] error - {str(e)}")
+            intersection_id = str(random.randint(1, 10))
+
+        return String(str(intersection_id))
 
 
 if __name__ == "__main__":

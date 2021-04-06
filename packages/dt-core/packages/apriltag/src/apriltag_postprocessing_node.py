@@ -13,6 +13,10 @@ import numpy as np
 import tf.transformations as tr
 from geometry_msgs.msg import PoseStamped, Pose
 from std_msgs.msg import Header
+import urllib
+import json
+import os
+import requests
 
 
 class AprilPostPros(object):
@@ -110,6 +114,11 @@ class AprilPostPros(object):
         return value
 
     def fake_tag(self):
+        try:
+            r = requests.get(f"http://autolab-control-center.local:8080/v1/duckiebot/{os.uname()[1]}/position").json()
+            intersection_id = str(r["data"]["intersectionId"])
+        except Exception as e:
+            print("error")
         tags_msg = AprilTagDetectionArray()
         tags_msg.header.stamp = rospy.Time.now()
         tags_msg.header.frame_id = ""
