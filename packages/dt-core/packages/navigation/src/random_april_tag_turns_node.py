@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
 import math
-
+import random
 import numpy
 
 import rospy
 from duckietown_msgs.msg import AprilTagsWithInfos, FSMState, TurnIDandType
-from std_msgs.msg import Int16  # Imports msg
+from std_msgs.msg import Int16, String  # Imports msg
 
 
 class RandomAprilTagTurnsNode:
@@ -14,13 +14,13 @@ class RandomAprilTagTurnsNode:
         # Save the name of the node
         self.node_name = rospy.get_name()
         self.turn_type = -1
-
         rospy.loginfo(f"[{self.node_name}] Initializing.")
 
         # Setup publishers
         # self.pub_topic_a = rospy.Publisher("~topic_a",String, queue_size=1)
         self.pub_turn_type = rospy.Publisher("~turn_type", Int16, queue_size=1, latch=True)
         self.pub_id_and_type = rospy.Publisher("~turn_id_and_type", TurnIDandType, queue_size=1, latch=True)
+        self.pub_intersection_id = rospy.Publisher("intersection_id", String, queue_size=1)
 
         # Setup subscribers
         # self.sub_topic_b = rospy.Subscriber("~topic_b", String, self.cbTopic)
@@ -71,6 +71,9 @@ class RandomAprilTagTurnsNode:
                 # go through possible intersection types
                 chosen_turn = self.get_chosen_turn()
                 rospy.loginfo("Turn type now: %i" % (chosen_turn))
+                intsect_id = self.get_intersection_id()
+                rospy.loginfo("Intersection ID: %s" % (intsect_id))
+                self.pub_intersection_id.publish(intsect_id)
                 # end of fix
 
                 self.turn_type = chosen_turn
@@ -95,6 +98,9 @@ class RandomAprilTagTurnsNode:
 
     def get_chosen_turn(self): # stub
         return 0
+
+    def get_intersection_id(self):
+        return String(str(random.randint(1, 10)))
 
 
 if __name__ == "__main__":
