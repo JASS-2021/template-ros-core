@@ -116,7 +116,7 @@ class AprilPostPros(object):
     def fake_tag(self):
         try:
             r = requests.get(f"http://autolab-control-center.local:8080/v1/duckiebot/{os.uname()[1]}/position").json()
-            intersection_id = str(r["data"]["intersectionId"])
+            intersection_id = str(r["data"]["atDirection"])
         except Exception as e:
             print("error")
         tags_msg = AprilTagDetectionArray()
