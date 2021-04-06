@@ -28,13 +28,13 @@ jobs:
           command: |
             mapfile -t fleet < <(avahi-browse -at | grep 'IPv4 DT::PRESENCE::autobot[^ ]*' | grep -o -P '(?<=PRESENCE::).*(?=_duckietown)' | xargs)
             cd template-ros-core
-            git checkout demo_24_feb
+            git checkout deployment
             git pull
             for bot in ${fleet[@]}; do
-              if [ $bot == autobot06 ] || [ $bot == autobotpi4 ]; then
+              if false && ([ $bot == autobot06 ] || [ $bot == autobotpi4 ]); then
                 echo $bot
                 dts devel build -f -H $bot.local
-                dts duckiebot demo --demo_name indefinite_navigation --duckiebot_name $bot --package_name duckietown_demos --image duckietown/template-ros-core:demo_24_feb-arm32v7 
+                dts duckiebot demo --demo_name indefinite_navigation --duckiebot_name $bot --package_name duckietown_demos --image duckietown/template-ros-core:deployment-arm32v7
               fi
             done
           # Hostname or IP address of the server
@@ -59,13 +59,13 @@ jobs:
           command: |
             mapfile -t fleet < <(avahi-browse -at | grep 'DT::ONLINE::[^ ]*' | grep -o -P '(?<=ONLINE::).*(?=_duckietown)' | xargs)
             cd duckie-town/template-ros-core
-            git checkout demo_24_feb
+            git checkout deployment
             git pull
             for bot in ${fleet[@]}; do
-              if [ $bot == donald ] || [ $bot == scrooge ]; then
+              if false && ([ $bot == donald ] || [ $bot == scrooge ]); then
                 echo $bot
                 dts devel build -f -H $bot.local
-                dts duckiebot demo --demo_name indefinite_navigation --duckiebot_name $bot --package_name duckietown_demos --image duckietown/template-ros-core:demo_24_feb-arm32v7 
+                dts duckiebot demo --demo_name indefinite_navigation --duckiebot_name $bot --package_name duckietown_demos --image duckietown/template-ros-core:deployment-arm32v7 
               fi
             done
           # Hostname or IP address of the server.
